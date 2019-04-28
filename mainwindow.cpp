@@ -1,23 +1,29 @@
 #include "mainwindow.h"
+#include "sqlitehelper.h"
 #include "ui_mainwindow.h"
 
-#include <QDate>
-#include <QFileDialog>
-#include <QMessageBox>
-#include <qdebug.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    SQLiteHelper sql;
+    sql.create_table("create table student (id int primary key, name varchar(30), age int)");
+
+   CREATE TABLE "config" (
+    "id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+    "key"	TEXT NOT NULL UNIQUE,
+    "value"	TEXT
+);
+
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 
 void MainWindow::on_pushButton_clicked()
 {
