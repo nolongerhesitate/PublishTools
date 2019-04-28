@@ -1,5 +1,7 @@
 #include "sqlitehelper.h"
 
+#include <QSqlError>
+
 
 
 SQLiteHelper::SQLiteHelper()
@@ -18,15 +20,19 @@ SQLiteHelper::SQLiteHelper()
 }
 
 
-void SQLiteHelper::create_table(QString sql){
+void SQLiteHelper::create_table(const QString& sql){
     if(!database.open()){
         qDebug() << "开启db失败";
         return;}
+    else{
+        qDebug() << "开启成功";
+    }
     QSqlQuery sql_query;
     sql_query.prepare(sql);
     if(!sql_query.exec())
     {
-        qDebug() << "Error =========";
+        QSqlError error = database.lastError();
+        qDebug() << "Error =========" << error.text() << error.type();
     }
     else
     {

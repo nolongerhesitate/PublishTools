@@ -11,7 +11,7 @@ class SQLiteHelper
 public:
     SQLiteHelper();
 
-    void create_table(QString sql);
+    void create_table(const QString& sql);
 
 private:
    QSqlDatabase database;
