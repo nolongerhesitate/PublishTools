@@ -1,5 +1,6 @@
 #include "sqlitehelper.h"
 
+#include <QDir>
 #include <QSqlError>
 
 
@@ -21,6 +22,7 @@ SQLiteHelper::SQLiteHelper()
 
 
 void SQLiteHelper::create_table(const QString& sql){
+    qDebug()<< QDir::currentPath() << " =============== ";
     if(!database.open()){
         qDebug() << "开启db失败";
         return;}
