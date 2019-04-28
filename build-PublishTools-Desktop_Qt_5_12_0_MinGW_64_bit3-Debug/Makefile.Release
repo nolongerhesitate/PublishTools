@@ -460,7 +460,14 @@ release/mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		E:/Qt/5.12.0/mingw73_64/include/QtGui/qtouchdevice.h \
 		E:/Qt/5.12.0/mingw73_64/include/QtWidgets/qtabwidget.h \
 		E:/Qt/5.12.0/mingw73_64/include/QtGui/qicon.h \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		E:/Qt/5.12.0/mingw73_64/include/QtWidgets/QFileDialog \
+		E:/Qt/5.12.0/mingw73_64/include/QtWidgets/qfiledialog.h \
+		E:/Qt/5.12.0/mingw73_64/include/QtCore/qdir.h \
+		E:/Qt/5.12.0/mingw73_64/include/QtCore/qfileinfo.h \
+		E:/Qt/5.12.0/mingw73_64/include/QtWidgets/qdialog.h \
+		E:/Qt/5.12.0/mingw73_64/include/QtWidgets/QMessageBox \
+		E:/Qt/5.12.0/mingw73_64/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\mainwindow.cpp
 
 release/moc_mainwindow.o: release/moc_mainwindow.cpp 

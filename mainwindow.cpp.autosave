@@ -39,5 +39,5 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_buildBtn_clicked()
 {
-      qDebug() << "Date:" << QDate::currentDate();
+    qDebug() << "Date:" << QDate::currentDate();
 }
