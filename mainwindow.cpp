@@ -39,5 +39,13 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_buildBtn_clicked()
 {
-      qDebug() << "Date:" << QDate::currentDate();
+    QFile file("./debug/Version.xml");
+    if(!file.open(QIODevice::Text)){
+        QMessageBox::warning(this,"error","打开文件失败!");
+    }else{
+        while (!file.atEnd()) {
+               qDebug()<< file.readLine();
+        }
+    }
+    file.close();
 }
