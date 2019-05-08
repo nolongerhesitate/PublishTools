@@ -33,8 +33,8 @@ void SQLiteHelper::create_table(const QString& sql){
     sql_query.prepare(sql);
     if(!sql_query.exec())
     {
-        QSqlError error = database.lastError();
-        qDebug() << "Error =========" << error.text() << error.type();
+//        QSqlError error = database.lastError();
+        qDebug() << "Error =========";
     }
     else
     {
@@ -42,3 +42,5 @@ void SQLiteHelper::create_table(const QString& sql){
     }
     database.close();
 }
+
+void SQLiteHelper::
