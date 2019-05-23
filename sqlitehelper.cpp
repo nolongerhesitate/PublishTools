@@ -22,7 +22,6 @@ SQLiteHelper::SQLiteHelper()
 
 
 void SQLiteHelper::create_table(const QString& sql){
-    qDebug()<< QDir::currentPath() << " =============== ";
     if(!database.open()){
         qDebug() << "开启db失败";
         return;}
@@ -31,14 +30,45 @@ void SQLiteHelper::create_table(const QString& sql){
     }
     QSqlQuery sql_query;
     sql_query.prepare(sql);
-    if(!sql_query.exec())
+    if(!sql_query.exec()) //执行SQL语句
     {
         QSqlError error = database.lastError();
-        qDebug() << "Error =========" << error.text() << error.type();
+        qDebug() << "Error =========" << error.text() << "qeuer error:" << sql_query.lastError().text() << error.type();
     }
     else
     {
         qDebug() << "Success =========";
     }
+    sql_query.finish();
     database.close();
+}
+
+
+QSqlQuery SQLiteHelper::query_execute(const QString &sql){
+    QSqlQuery sql_query;
+    if(!database.open()){
+        qDebug() << "开启db失败";
+    }else {
+        sql_query.prepare(sql);
+        sql_query.exec(sql);
+        sql_query.finish();
+        database.close();
+    }
+    return sql_query;
+}
+
+
+bool SQLiteHelper::insert_execute(const QString &sql){
+    QSqlQuery sql_query;
+    if(!database.open()){
+        qDebug()<< "开启失败";
+        return false;
+    }
+    else {
+        sql_query.prepare(sql);
+        bool r = sql_query.exec(sql);
+        sql_query.finish();
+        database.close();
+        return r;
+    }
 }

@@ -9,7 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     SQLiteHelper sql;
+    // 创建表
     sql.create_table("CREATE TABLE 'config' ( 'id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, 'key' TEXT NOT NULL UNIQUE,'value' TEXT  )");
+    QSqlQuery q = sql.query_execute("SELECT * FROM config where key = 'path'");
 }
 
 MainWindow::~MainWindow()
