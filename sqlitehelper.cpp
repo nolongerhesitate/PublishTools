@@ -43,4 +43,4 @@ void SQLiteHelper::create_table(const QString& sql){
     database.close();
 }
 
-void SQLiteHelper::
+//void SQLiteHelper::
