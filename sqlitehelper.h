@@ -6,7 +6,7 @@
 #include <qdebug.h>
 #include <QSqlQuery>
 
-namespace Helper {
+namespace Helper { // 帮助类命名空间
 class SQLiteHelper;
 }
 
