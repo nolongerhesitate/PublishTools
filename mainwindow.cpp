@@ -8,10 +8,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    SQLiteHelper sql;
+
     // 创建表
-    sql.create_table("CREATE TABLE 'config' ( 'id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, 'key' TEXT NOT NULL UNIQUE,'value' TEXT  )");
-    QSqlQuery q = sql.query_execute("SELECT * FROM config where key = 'path'");
+    if(!sql.is_table_exist(sql.config_tablename())){ // 判断配置表是否一存在，不存在创建并插入初始数据
+        sql.create_table("CREATE TABLE 'config' ( 'id'	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, 'key' TEXT NOT NULL UNIQUE,'value' TEXT  )");
+        sql.insert_execute("INSERT INTO config (key, value) VALUES( 'path','')");
+        sql.insert_execute("INSERT INTO config (key, value) VALUES( 'version','0.0.0.0')");
+        sql.insert_execute("INSERT INTO config (key, value) VALUES( 'url','http://localhost/downloads/update.zip')");
+        sql.insert_execute("INSERT INTO config (key, value) VALUES( 'changelog','http://localhost/downloads/update.html')");
+        sql.insert_execute("INSERT INTO config (key, value) VALUES( 'mandatory','')");
+    }
+    ui->pathLineEdit->setText(sql.get_single_config("path"));
+    ui->versionLineEdit->setText(sql.get_single_config("version"));
+    ui->urlLineEdit->setText(sql.get_single_config("url"));
+    ui->changelogLineEdit->setText(sql.get_single_config("changelog"));
+    ui->mandatoryCheckBox->setChecked("true" == sql.get_single_config("mandatory"));
 }
 
 MainWindow::~MainWindow()
@@ -48,4 +59,18 @@ void MainWindow::on_buildBtn_clicked()
         }
     }
     file.close();
+}
+
+// 保存修改
+void MainWindow::on_savePushButton_clicked()
+{
+    if(sql.update_single_config("path",ui->pathLineEdit->text()) &&
+            sql.update_single_config("version",ui->versionLineEdit->text()) &&
+            sql.update_single_config("url",ui->urlLineEdit->text()) &&
+            sql.update_single_config("changelog",ui->changelogLineEdit->text()) &&
+            sql.update_single_config("mandatory",ui->mandatoryCheckBox->isChecked()?"true":"false")){
+        QMessageBox::information(this,"成功","保存成功!");
+    }else {
+        QMessageBox::warning(this,"失败","有项目保存失败!");
+    }
 }

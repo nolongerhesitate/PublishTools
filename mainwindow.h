@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "sqlitehelper.h"
+
 #include <QMainWindow>
 #include <QSqlDatabase>
 #include <QSqlError>
@@ -27,8 +29,11 @@ private slots:
 
     void on_buildBtn_clicked();
 
+    void on_savePushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    SQLiteHelper sql;
 };
 
 #endif // MAINWINDOW_H

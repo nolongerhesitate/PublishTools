@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>449</width>
-    <height>386</height>
+    <width>467</width>
+    <height>426</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="pathLineEdit"/>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton">
@@ -59,7 +59,7 @@
      <item>
       <widget class="QLineEdit" name="versionLineEdit">
        <property name="text">
-        <string>0.0.0.0</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -88,7 +88,7 @@
      <item>
       <widget class="QLineEdit" name="urlLineEdit">
        <property name="text">
-        <string>http://localhost/downloads/update.zip</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -117,7 +117,7 @@
      <item>
       <widget class="QLineEdit" name="changelogLineEdit">
        <property name="text">
-        <string>http://localhost/downloads/update.html</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -134,46 +134,46 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_7">
      <item>
-      <widget class="QLabel" name="label_6">
-       <property name="toolTip">
-        <string>强制更新</string>
-       </property>
-       <property name="midLineWidth">
-        <number>0</number>
-       </property>
+      <widget class="QCheckBox" name="mandatoryCheckBox">
        <property name="text">
-        <string>mandatory:</string>
+        <string>mandatory</string>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="mandatoryComboBox">
-       <item>
-        <property name="text">
-         <string>false</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>true</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="buildBtn">
+   <widget class="QWidget" name="horizontalLayoutWidget_6">
     <property name="geometry">
      <rect>
-      <x>170</x>
+      <x>20</x>
       <y>270</y>
-      <width>80</width>
-      <height>20</height>
+      <width>391</width>
+      <height>41</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Build</string>
-    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QPushButton" name="saveAndBuildPushButton">
+       <property name="text">
+        <string>Save &amp;&amp; Build</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="savePushButton">
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buildBtn">
+       <property name="text">
+        <string>Build</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -181,7 +181,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>449</width>
+     <width>467</width>
      <height>25</height>
     </rect>
    </property>
