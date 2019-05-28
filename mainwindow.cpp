@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->urlLineEdit->setText(sql.get_single_config("url"));
     ui->changelogLineEdit->setText(sql.get_single_config("changelog"));
     ui->mandatoryCheckBox->setChecked("true" == sql.get_single_config("mandatory"));
+    this->setWindowTitle("发版小工具(PublishTool)");
 }
 
 MainWindow::~MainWindow()
