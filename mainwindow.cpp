@@ -2,6 +2,8 @@
 #include "sqlitehelper.h"
 #include "ui_mainwindow.h"
 
+#include <QXmlStreamReader>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,24 +44,40 @@ void MainWindow::on_pushButton_clicked()
     //设置文件过滤器
     fileDialog->setNameFilter(tr("xml(*.xml)"));
     //设置可以选择多个文件,默认为只能选择一个文件QFileDialog::ExistingFiles
-    fileDialog->setFileMode(QFileDialog::ExistingFiles);
+    fileDialog->setFileMode(QFileDialog::Directory);
     //设置视图模式
     fileDialog->setViewMode(QFileDialog::Detail);
-    fileDialog->open();
+    sql.update_single_config("path", fileDialog->getExistingDirectory());
+    ui->pathLineEdit->setText(sql.get_single_config("path"));
 }
 
 
 void MainWindow::on_buildBtn_clicked()
 {
-    QFile file("./debug/Version.xml");
-    if(!file.open(QIODevice::Text)){
-        QMessageBox::warning(this,"error","打开文件失败!");
-    }else{
-        while (!file.atEnd()) {
-            qDebug()<< file.readLine();
-        }
+    QDir dir(sql.get_single_config("path"));
+    QString filename = dir.absoluteFilePath("Version.xml");
+   QFile file(filename);
+   QXmlStreamReader reader;
+   reader.setDevice(&file);
+   if(file.exists()){ // 文件已存在
+       if(!file.open(QFile::ReadWrite)){
+           QMessageBox::critical(this,"错误","无法打开:"+filename);
+           return;
+       }
+
+       while(!reader.atEnd()){
+           if(reader.isStartElement()){
+               qDebug()<<"+++++"<< reader.name()<<endl;
+           }else {
+            reader.readNext();
+}
+       }
+   }else {
+       if(!file.open(QFile::WriteOnly)){
+           QMessageBox::critical(this,"错误","无法创建:"+filename);
+           return;
+       }
     }
-    file.close();
 }
 
 // 保存修改
