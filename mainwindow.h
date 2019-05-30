@@ -31,6 +31,12 @@ private slots:
 
     void on_savePushButton_clicked();
 
+    void on_saveAndBuildPushButton_clicked();
+
+    bool save(); // 保存配置
+
+    void build(); //生成xml
+
 private:
     Ui::MainWindow *ui;
     SQLiteHelper sql;
