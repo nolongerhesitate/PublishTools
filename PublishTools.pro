@@ -28,11 +28,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    sqlitehelper.cpp
+    sqlitehelper.cpp \
+    verxmlhelper.cpp
 
 HEADERS += \
         mainwindow.h \
-    sqlitehelper.h
+    sqlitehelper.h \
+    verxmlhelper.h
 
 FORMS += \
         mainwindow.ui

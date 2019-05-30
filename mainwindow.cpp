@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "sqlitehelper.h"
 #include "ui_mainwindow.h"
+#include "verxmlhelper.h"
 
 #include <QXmlStreamReader>
 
@@ -54,42 +55,56 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_buildBtn_clicked()
 {
-    QDir dir(sql.get_single_config("path"));
-    QString filename = dir.absoluteFilePath("Version.xml");
-   QFile file(filename);
-   QXmlStreamReader reader;
-   reader.setDevice(&file);
-   if(file.exists()){ // 文件已存在
-       if(!file.open(QFile::ReadWrite)){
-           QMessageBox::critical(this,"错误","无法打开:"+filename);
-           return;
-       }
-
-       while(!reader.atEnd()){
-           if(reader.isStartElement()){
-               qDebug()<<"+++++"<< reader.name()<<endl;
-           }else {
-            reader.readNext();
-}
-       }
-   }else {
-       if(!file.open(QFile::WriteOnly)){
-           QMessageBox::critical(this,"错误","无法创建:"+filename);
-           return;
-       }
-    }
+   build();
 }
 
 // 保存修改
 void MainWindow::on_savePushButton_clicked()
 {
-    if(sql.update_single_config("path",ui->pathLineEdit->text()) &&
+    save() ? QMessageBox::information(this,"成功","保存成功!"):QMessageBox::warning(this,"失败","有项目保存失败!");
+}
+
+void MainWindow::on_saveAndBuildPushButton_clicked()
+{
+    if(!save()){
+        QMessageBox::warning(this,"错误","配置保存失败，请重试!");
+        return;
+    }
+    build();
+}
+
+bool MainWindow::save(){
+    return sql.update_single_config("path",ui->pathLineEdit->text()) &&
             sql.update_single_config("version",ui->versionLineEdit->text()) &&
             sql.update_single_config("url",ui->urlLineEdit->text()) &&
             sql.update_single_config("changelog",ui->changelogLineEdit->text()) &&
-            sql.update_single_config("mandatory",ui->mandatoryCheckBox->isChecked()?"true":"false")){
-        QMessageBox::information(this,"成功","保存成功!");
-    }else {
-        QMessageBox::warning(this,"失败","有项目保存失败!");
-    }
+            sql.update_single_config("mandatory",ui->mandatoryCheckBox->isChecked()?"true":"false");
+}
+
+void MainWindow::build(){
+    QDir dir(sql.get_single_config("path"));
+    QString filename = dir.absoluteFilePath("Version.xml");
+   QFile file(filename);
+   if(file.exists()){
+           if(QMessageBox::question(this,"警告","已存在同名文件是否覆盖?") == QMessageBox::Yes){ // 文件已存在
+               if(!file.remove()){
+                    QMessageBox::information(this,"提示","删除失败，请手动删除同名文件后重新生成!");
+                    return;
+               }
+           }else {
+               return;
+            }
+   }
+   if(!file.open(QFile::WriteOnly)){
+           QMessageBox::critical(this,"错误","无法创建:"+filename);
+           return;
+   }
+   // 开始写入
+   VerXMLHelper xmlWriter;
+   xmlWriter.setDevice(&file);
+   xmlWriter.writeVerXml(sql.get_single_config("version"),
+                         sql.get_single_config("url"),
+                         sql.get_single_config("changelog"),
+                         "true" == sql.get_single_config("mandatory"));
+   file.close();
 }

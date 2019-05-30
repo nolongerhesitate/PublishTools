@@ -25,12 +25,19 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QLineEdit" name="pathLineEdit"/>
+      <widget class="QLineEdit" name="pathLineEdit">
+       <property name="toolTip">
+        <string>配置文件生成路径</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton">
+       <property name="toolTip">
+        <string>配置文件生成路径</string>
+       </property>
        <property name="text">
-        <string>选择配置文件</string>
+        <string>配置路径</string>
        </property>
       </widget>
      </item>
@@ -58,6 +65,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="versionLineEdit">
+       <property name="toolTip">
+        <string>版本号</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -87,6 +97,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="urlLineEdit">
+       <property name="toolTip">
+        <string>更新包地址</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -116,6 +129,9 @@
      </item>
      <item>
       <widget class="QLineEdit" name="changelogLineEdit">
+       <property name="toolTip">
+        <string>更新描述地址（.html）</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -135,6 +151,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout_7">
      <item>
       <widget class="QCheckBox" name="mandatoryCheckBox">
+       <property name="toolTip">
+        <string>是否强制更新</string>
+       </property>
        <property name="text">
         <string>mandatory</string>
        </property>
@@ -154,6 +173,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="QPushButton" name="saveAndBuildPushButton">
+       <property name="toolTip">
+        <string>保存并生成配置文件</string>
+       </property>
        <property name="text">
         <string>Save &amp;&amp; Build</string>
        </property>
@@ -161,6 +183,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="savePushButton">
+       <property name="toolTip">
+        <string>保存配置</string>
+       </property>
        <property name="text">
         <string>Save</string>
        </property>
@@ -168,6 +193,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="buildBtn">
+       <property name="toolTip">
+        <string>生成配置文件</string>
+       </property>
        <property name="text">
         <string>Build</string>
        </property>
