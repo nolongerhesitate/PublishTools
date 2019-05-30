@@ -64,14 +64,37 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="versionLineEdit">
-       <property name="toolTip">
-        <string>版本号</string>
-       </property>
+      <widget class="QLineEdit" name="ver1LineEdit"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
        <property name="text">
-        <string/>
+        <string>.</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="ver2LineEdit"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="ver3LineEdit"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="ver4LineEdit"/>
      </item>
     </layout>
    </widget>
@@ -210,7 +233,7 @@
      <x>0</x>
      <y>0</y>
      <width>467</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

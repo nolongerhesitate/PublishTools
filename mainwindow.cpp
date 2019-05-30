@@ -22,7 +22,11 @@ MainWindow::MainWindow(QWidget *parent) :
         sql.insert_execute("INSERT INTO config (key, value) VALUES( 'mandatory','')");
     }
     ui->pathLineEdit->setText(sql.get_single_config("path"));
-    ui->versionLineEdit->setText(sql.get_single_config("version"));
+    QStringList list = sql.get_single_config("version").split(".");
+    ui->ver1LineEdit->setText(list[0]);
+    ui->ver2LineEdit->setText(list[1]);
+    ui->ver3LineEdit->setText(list[2]);
+    ui->ver4LineEdit->setText(list[3]);
     ui->urlLineEdit->setText(sql.get_single_config("url"));
     ui->changelogLineEdit->setText(sql.get_single_config("changelog"));
     ui->mandatoryCheckBox->setChecked("true" == sql.get_single_config("mandatory"));
@@ -55,7 +59,7 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_buildBtn_clicked()
 {
-   build();
+    build();
 }
 
 // 保存修改
@@ -74,37 +78,38 @@ void MainWindow::on_saveAndBuildPushButton_clicked()
 }
 
 bool MainWindow::save(){
-    return sql.update_single_config("path",ui->pathLineEdit->text()) &&
-            sql.update_single_config("version",ui->versionLineEdit->text()) &&
-            sql.update_single_config("url",ui->urlLineEdit->text()) &&
-            sql.update_single_config("changelog",ui->changelogLineEdit->text()) &&
-            sql.update_single_config("mandatory",ui->mandatoryCheckBox->isChecked()?"true":"false");
+    return sql.update_single_config("path",ui->pathLineEdit->text())
+            && sql.update_single_config("version",
+                                        ui->ver1LineEdit->text()+"."+ui->ver2LineEdit->text()+"." + ui->ver3LineEdit->text()+"."+ui->ver4LineEdit->text())
+            && sql.update_single_config("url",ui->urlLineEdit->text())
+            && sql.update_single_config("changelog",ui->changelogLineEdit->text())
+            && sql.update_single_config("mandatory",ui->mandatoryCheckBox->isChecked()?"true":"false");
 }
 
 void MainWindow::build(){
     QDir dir(sql.get_single_config("path"));
     QString filename = dir.absoluteFilePath("Version.xml");
-   QFile file(filename);
-   if(file.exists()){
-           if(QMessageBox::question(this,"警告","已存在同名文件是否覆盖?") == QMessageBox::Yes){ // 文件已存在
-               if(!file.remove()){
-                    QMessageBox::information(this,"提示","删除失败，请手动删除同名文件后重新生成!");
-                    return;
-               }
-           }else {
-               return;
+    QFile file(filename);
+    if(file.exists()){
+        if(QMessageBox::question(this,"警告","已存在同名文件是否覆盖?") == QMessageBox::Yes){ // 文件已存在
+            if(!file.remove()){
+                QMessageBox::information(this,"提示","删除失败，请手动删除同名文件后重新生成!");
+                return;
             }
-   }
-   if(!file.open(QFile::WriteOnly)){
-           QMessageBox::critical(this,"错误","无法创建:"+filename);
-           return;
-   }
-   // 开始写入
-   VerXMLHelper xmlWriter;
-   xmlWriter.setDevice(&file);
-   xmlWriter.writeVerXml(sql.get_single_config("version"),
-                         sql.get_single_config("url"),
-                         sql.get_single_config("changelog"),
-                         "true" == sql.get_single_config("mandatory"));
-   file.close();
+        }else {
+            return;
+        }
+    }
+    if(!file.open(QFile::WriteOnly)){
+        QMessageBox::critical(this,"错误","无法创建:"+filename);
+        return;
+    }
+    // 开始写入
+    VerXMLHelper xmlWriter;
+    xmlWriter.setDevice(&file);
+    xmlWriter.writeVerXml(ui->ver1LineEdit->text()+"."+ui->ver2LineEdit->text()+"." + ui->ver3LineEdit->text()+"."+ui->ver4LineEdit->text(),
+                          ui->urlLineEdit->text(),
+                          ui->changelogLineEdit->text(),
+                          ui->mandatoryCheckBox->isChecked());
+    file.close();
 }
