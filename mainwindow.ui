@@ -233,7 +233,7 @@
      <x>0</x>
      <y>0</y>
      <width>467</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -242,7 +242,7 @@
     </property>
     <widget class="QMenu" name="menuupload">
      <property name="title">
-      <string>upload</string>
+      <string>上传</string>
      </property>
      <addaction name="actionqiniuyun"/>
     </widget>
@@ -261,7 +261,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionqiniuyun">
    <property name="text">
-    <string>qiniuyun</string>
+    <string>七牛云</string>
    </property>
   </action>
  </widget>
